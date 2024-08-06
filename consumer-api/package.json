@@ -1,0 +1,22 @@
+{
+  "name": "node-server",
+  "version": "1.0.0",
+  "main": "dist/server.js",
+  "scripts": {
+    "start": "ts-node src/server.ts",
+    "build": "tsc"
+  },
+  "keywords": [],
+  "author": "Abel Ayalew(@nabroleonx)",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^22.1.0",
+    "typescript": "^5.5.4"
+  },
+  "dependencies": {
+    "@types/express": "^4.17.21",
+    "axios": "^1.7.3",
+    "express": "^4.19.2",
+    "ts-node": "^10.9.2"
+  }
+}

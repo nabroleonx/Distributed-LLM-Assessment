@@ -1,0 +1,24 @@
+services:
+  llm-service:
+    build:
+      context: .
+      dockerfile: llm-service/Dockerfile
+    ports:
+      - "8000:8000"
+    networks:
+      - distributed-llm
+  
+  consumer-api:
+    build:
+      context: .
+      dockerfile: consumer-api/Dockerfile
+    ports:
+      - "3000:3000"
+    networks:
+      - distributed-llm
+
+  
+
+networks:
+  distributed-llm:
+    driver: bridge
