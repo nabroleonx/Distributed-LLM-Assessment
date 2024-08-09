@@ -47,6 +47,9 @@ async def query_llm(query: Query, db: Session = Depends(get_db)):
     if model_name not in model_dict:
         raise HTTPException(status_code=400, detail="Invalid model selected")
 
+    if not query.question or query.question == "":
+        raise HTTPException(status_code=400, detail="Question is required")
+
     model = model_dict[model_name]["model"]
 
     conversation_id = query.conversation_id or str(len(get_conversations(db, None)) + 1)
