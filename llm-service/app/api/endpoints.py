@@ -10,16 +10,12 @@ router = APIRouter()
 
 model_dict = {
     "llama2": {
-        "model": AutoModelForCausalLM.from_pretrained("meta-llama/Llama-2-7b-hf"),
-        "tokenizer": AutoTokenizer.from_pretrained("meta-llama/Llama-2-7b-hf"),
+        "model": AutoModelForCausalLM.from_pretrained("daryl149/llama-2-7b-chat-hf"),
+        "tokenizer": AutoTokenizer.from_pretrained("daryl149/llama-2-7b-chat-hf"),
     },
     "mistral": {
-        "model": AutoModelForCausalLM.from_pretrained(
-            "mistralai/Mistral-7B-Instruct-v0.3"
-        ),
-        "tokenizer": AutoTokenizer.from_pretrained(
-            "mistralai/Mistral-7B-Instruct-v0.3"
-        ),
+        "model": AutoModelForCausalLM.from_pretrained("Open-Orca/Mistral-7B-OpenOrca"),
+        "tokenizer": AutoTokenizer.from_pretrained("Open-Orca/Mistral-7B-OpenOrca"),
     },
 }
 
@@ -51,7 +47,6 @@ async def query_llm(query: Query, db: Session = Depends(get_db)):
     if model_name not in model_dict:
         raise HTTPException(status_code=400, detail="Invalid model selected")
 
-    tokenizer = model_dict[model_name]["tokenizer"]
     model = model_dict[model_name]["model"]
 
     conversation_id = query.conversation_id or str(len(get_conversations(db, None)) + 1)
@@ -63,7 +58,7 @@ async def query_llm(query: Query, db: Session = Depends(get_db)):
 
     prompt = template.format(context=context, question=query.query)
 
-    chatbot = pipeline("text-generation", model=model, tokenizer=tokenizer)
+    chatbot = pipeline("text-generation", model=model)
 
     response = chatbot(prompt, max_new_tokens=60)
     generated_text = response[0]["generated_text"].replace(prompt, "").strip()
