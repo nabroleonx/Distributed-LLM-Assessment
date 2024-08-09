@@ -10,12 +10,16 @@ router = APIRouter()
 
 model_dict = {
     "llama2": {
-        "model": AutoModelForCausalLM.from_pretrained("llama2"),
-        "tokenizer": AutoTokenizer.from_pretrained("llama2"),
+        "model": AutoModelForCausalLM.from_pretrained("meta-llama/Llama-2-7b-hf"),
+        "tokenizer": AutoTokenizer.from_pretrained("meta-llama/Llama-2-7b-hf"),
     },
     "mistral": {
-        "model": AutoModelForCausalLM.from_pretrained("mistral"),
-        "tokenizer": AutoTokenizer.from_pretrained("mistral"),
+        "model": AutoModelForCausalLM.from_pretrained(
+            "mistralai/Mistral-7B-Instruct-v0.3"
+        ),
+        "tokenizer": AutoTokenizer.from_pretrained(
+            "mistralai/Mistral-7B-Instruct-v0.3"
+        ),
     },
 }
 
