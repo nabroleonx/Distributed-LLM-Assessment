@@ -56,14 +56,14 @@ async def query_llm(query: Query, db: Session = Depends(get_db)):
         f"{entry.user_input}\n{entry.response}" for entry in previous_conversations
     )
 
-    prompt = template.format(context=context, question=query.query)
+    prompt = template.format(context=context, question=query.question)
 
     chatbot = pipeline("text-generation", model=model)
 
     response = chatbot(prompt, max_new_tokens=60)
     generated_text = response[0]["generated_text"].replace(prompt, "").strip()
 
-    create_conversation(db, conversation_id, query.query, generated_text)
+    create_conversation(db, conversation_id, query.question, generated_text)
 
     return {"conversation_id": conversation_id, "response": generated_text}
 
